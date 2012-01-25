@@ -19,6 +19,7 @@ setup(
         'Framework :: Django',
         'Intended Audience :: Developers',
         'Intended Audience :: Information Technology',
+        'License :: OSI Approved :: BSD License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
     ],
