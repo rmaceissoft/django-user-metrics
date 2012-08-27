@@ -1,6 +1,10 @@
 import datetime
 
+from django.utils.importlib import import_module
+
 from user_metrics.models import MetricWeek
+from user_metrics import settings
+
 
 def week_for_date(date):
     return date - datetime.timedelta(days=date.weekday())
@@ -15,4 +19,9 @@ def total_weeks_aggregated():
     except IndexError:
         first_week = week_for_date(datetime.date.today())
     return (datetime.date.today() - first_week).days / 7
+
+
+def get_backend():
+    backend = import_module(settings.USER_METRICS_BACKEND)
+    return backend
 
