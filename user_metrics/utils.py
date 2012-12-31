@@ -10,6 +10,19 @@ def week_for_date(date):
     return date - datetime.timedelta(days=date.weekday())
 
 
+def month_for_date(date):
+    return date - datetime.timedelta(days=date.day-1)
+
+
+def quarter_for_date(date):
+    quarter_month = ((date.month - 1) / 3) * 3 + 1
+    return datetime.date(date.year, quarter_month, 1)
+
+
+def year_for_date(date):
+    return datetime.date(date.year, 1, 1)
+
+
 def total_weeks_aggregated():
     """
     return total of weeks aggregates to MetricWeek model

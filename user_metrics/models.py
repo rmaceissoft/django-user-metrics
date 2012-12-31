@@ -21,7 +21,7 @@ class MetricItem(models.Model):
     date_up = models.DateField(default=date.today)
 
     def __unicode__(self):
-        '%d %s by %s at %s' % (self.count, self.metric.name, self.user, self.date_up)
+        return '%d %s by %s at %s' % (self.count, self.metric.name, self.user, self.date_up)
 
 
 class MetricDay(models.Model):
@@ -42,3 +42,35 @@ class MetricWeek(models.Model):
 
     count = models.IntegerField(default=0)
     date_up = models.DateField(default=date.today)
+
+
+class MetricMonth(models.Model):
+    """ represent aggregation of metrics monthly
+    """
+    metric = models.ForeignKey(Metric)
+    user = models.ForeignKey(User)
+
+    count = models.IntegerField(default=0)
+    date_up = models.DateField(default=date.today)
+
+
+class MetricQuarter(models.Model):
+    """ represent aggregation of metrics by quarter
+    """
+    metric = models.ForeignKey(Metric)
+    user = models.ForeignKey(User)
+
+    count = models.IntegerField(default=0)
+    date_up = models.DateField(default=date.today)
+
+
+class MetricYear(models.Model):
+    """ represent aggregation of metrics by year
+    """
+    metric = models.ForeignKey(Metric)
+    user = models.ForeignKey(User)
+
+    count = models.IntegerField(default=0)
+    date_up = models.DateField(default=date.today)
+
+
