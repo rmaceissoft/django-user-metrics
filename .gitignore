@@ -1,2 +1,4 @@
 .idea/*
 *.pyc
+example_project/db/*
+*egg-info/
