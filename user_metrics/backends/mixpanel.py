@@ -6,11 +6,12 @@ import json
 from user_metrics import settings
 
 
-def put_metric(slug, user, count=1, **kwargs):
+def put_metric(slug, user=None, count=1, **kwargs):
     """ Increment a metric by a given user """
     if "token" not in kwargs:
         kwargs["token"] = settings.USER_METRICS_MIXPANEL_TOKEN
-    kwargs['$bucket'] = user.id
+    if user:
+        kwargs['$bucket'] = user.id
 
     params = {"event": slug, "properties": kwargs}
     b64_data = base64.b64encode(json.dumps(params))

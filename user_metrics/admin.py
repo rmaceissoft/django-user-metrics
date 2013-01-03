@@ -14,7 +14,7 @@ class MetricDayAdmin(admin.ModelAdmin):
     list_filter = ('metric', 'user', )
 
     def when(self, obj):
-        return obj.date_up
+        return obj.date_up.strftime("%b. %d, %Y")
     when.short_description = u'When'
     when.admin_order_field = 'date_up'
 

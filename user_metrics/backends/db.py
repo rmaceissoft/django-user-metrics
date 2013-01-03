@@ -1,7 +1,7 @@
 from user_metrics.models import Metric, MetricItem
 
 
-def put_metric(slug, user, count=1, **kwargs):
+def put_metric(slug, user=None, count=1, **kwargs):
     """ Increment a metric by a given user """
 
     try:
