@@ -2,6 +2,9 @@ from datetime import date
 from django.db import models
 from django.contrib.auth.models import User
 
+from user_metrics.utils import get_quarter_number
+
+
 class Metric(models.Model):
     """ holds the types of metrics
     """
@@ -33,6 +36,18 @@ class MetricDay(models.Model):
     count = models.IntegerField(default=0)
     date_up = models.DateField(default=date.today)
 
+    def __unicode__(self):
+        values = dict(
+            name = self.metric.name,
+            date_up = self.date_up
+        )
+        if self.user:
+            string =  "'%(name)s' by %(user)s for %(date_up)s"
+            values['user'] = self.user
+        else:
+            string = "'%(name)s' for '%(date_up)s'"
+        return string % values
+
 
 class MetricWeek(models.Model):
     """ represent aggregation of metric weekly
@@ -42,6 +57,19 @@ class MetricWeek(models.Model):
 
     count = models.IntegerField(default=0)
     date_up = models.DateField(default=date.today)
+
+    def __unicode__(self):
+        values = dict(
+            name = self.metric.name,
+            week = self.date_up.strftime("%U"),
+            year = self.date_up.strftime("%Y")
+        )
+        if self.user:
+            string =  "'%(name)s' by %(user)s for week %(week)s of year %(year)s"
+            values['user'] = self.user
+        else:
+            string = "'%(name)s' for week %(week)s of year %(year)s"
+        return string % values
 
 
 class MetricMonth(models.Model):
@@ -53,6 +81,19 @@ class MetricMonth(models.Model):
     count = models.IntegerField(default=0)
     date_up = models.DateField(default=date.today)
 
+    def __unicode__(self):
+        values = dict(
+            name = self.metric.name,
+            month = self.date_up.strftime("%B"),
+            year = self.date_up.strftime("%Y")
+        )
+        if self.user:
+            string =  "'%(name)s' by %(user)s for %(month)s %(year)s"
+            values['user'] = self.user
+        else:
+            string = "'%(name)s' for %(month)s %(year)s"
+        return string % values
+
 
 class MetricQuarter(models.Model):
     """ represent aggregation of metrics by quarter
@@ -62,6 +103,19 @@ class MetricQuarter(models.Model):
 
     count = models.IntegerField(default=0)
     date_up = models.DateField(default=date.today)
+
+    def __unicode__(self):
+        values = dict(
+            name = self.metric.name,
+            quarter = get_quarter_number(self.date_up, True),
+            year = self.date_up.strftime("%Y")
+        )
+        if self.user:
+            string =  "'%(name)s' by %(user)s for quarter %(quarter)s of year %(year)s"
+            values['user'] = self.user
+        else:
+            string = "'%(name)s' for %(year)s"
+        return string % values
 
 
 class MetricYear(models.Model):
@@ -73,4 +127,15 @@ class MetricYear(models.Model):
     count = models.IntegerField(default=0)
     date_up = models.DateField(default=date.today)
 
+    def __unicode__(self):
+        values = dict(
+            name = self.metric.name,
+            year = self.date_up.strftime("%Y")
+        )
+        if self.user:
+            string =  "'%(name)s' by %(user)s for %(year)s"
+            values['user'] = self.user
+        else:
+            string = "'%(name)s' for %(year)s"
+        return string % values
 

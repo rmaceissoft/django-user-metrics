@@ -7,8 +7,6 @@ from user_metrics.utils import week_for_date, month_for_date, quarter_for_date, 
 class Command(NoArgsCommand):
     help = "Aggregate Application Metrics"
 
-    requires_model_validation = True
-
     def handle_noargs(self, **options):
         """ Aggregate Metrics by User """
 
@@ -47,7 +45,7 @@ class Command(NoArgsCommand):
 
             # Quarter aggregation
             quarter_date = quarter_for_date(item.date_up)
-            metric_quarter, create = MetricQuarter.object.get_or_create(
+            metric_quarter, create = MetricQuarter.objects.get_or_create(
                 metric = item.metric,
                 user = item.user,
                 date_up = quarter_date
@@ -57,7 +55,7 @@ class Command(NoArgsCommand):
 
             # Yearly aggregation
             year_date = year_for_date(item.date_up)
-            metric_year, create = MetricYear.object.get_or_create(
+            metric_year, create = MetricYear.objects.get_or_create(
                 metric = item.metric,
                 user = item.user,
                 date_up = year_date
